@@ -8,6 +8,7 @@ def main():
 	clock = pygame.time.Clock()
 	dt = 0
 	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+	player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 	print("Starting asteroids!")
 	print(f"Screen width: {SCREEN_WIDTH}")
 	print(f"Screen height: {SCREEN_HEIGHT}")
@@ -18,6 +19,8 @@ def main():
 				return
 		# Fill the screen with black
 		screen.fill((0, 0, 0))
+		# Render player on screen constantly
+		player.draw(screen)
 		# Constantly refresh the black
 		pygame.display.flip()
 		# Limit frame rate to 60 FPS
