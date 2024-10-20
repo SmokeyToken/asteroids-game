@@ -5,6 +5,8 @@ from constants import *
 import pygame
 from player import Player
 from circleshape import CircleShape
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 def main():
 	pygame.init()
@@ -17,10 +19,15 @@ def main():
 
 	updatable = pygame.sprite.Group()
 	drawable = pygame.sprite.Group()
-	Player.containers = (updatable, drawable)
+	asteroids = pygame.sprite.Group()
 
-	# Need to instantiate the player after putting the class in the container
+	Player.containers = (updatable, drawable)
+	Asteroid.containers = (asteroids, updatable, drawable)
+	AsteroidField.containers = (updatable,)
+
+	# Need to instantiate the objects after putting the class in the container
 	player_instance = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+	asteroid_field = AsteroidField()
 
 	while True:
 		# Check if user has closed window
