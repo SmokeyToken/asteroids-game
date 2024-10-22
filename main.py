@@ -7,6 +7,8 @@ from player import Player
 from circleshape import CircleShape
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+import sys
+from shot import Shot
 
 def main():
 	pygame.init()
@@ -20,10 +22,12 @@ def main():
 	updatable = pygame.sprite.Group()
 	drawable = pygame.sprite.Group()
 	asteroids = pygame.sprite.Group()
+	shots = pygame.sprite.Group()
 
 	Player.containers = (updatable, drawable)
 	Asteroid.containers = (asteroids, updatable, drawable)
 	AsteroidField.containers = (updatable,)
+	Shot.containers = (updatable, drawable)
 
 	# Need to instantiate the objects after putting the class in the container
 	player_instance = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -34,6 +38,12 @@ def main():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				return
+		
+		keys = pygame.key.get_pressed()
+
+		if keys[pygame.K_SPACE]:
+			player_instance.shoot()
+
 		# Limit frame rate to 60 FPS
 		dt = clock.tick(60) / 1000.0
 
@@ -43,6 +53,11 @@ def main():
 		# Update everything that should be updated
 		for thing in updatable:
 			thing.update(dt)
+
+		for asteroid in asteroids:
+			if player_instance.collision(asteroid):
+				print("Game over!")
+				sys.exit()
 		# Render everything on screen constantly
 		for thing in drawable:
 			thing.draw(screen)
