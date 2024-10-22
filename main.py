@@ -27,7 +27,7 @@ def main():
 	Player.containers = (updatable, drawable)
 	Asteroid.containers = (asteroids, updatable, drawable)
 	AsteroidField.containers = (updatable,)
-	Shot.containers = (updatable, drawable)
+	Shot.containers = (shots, updatable, drawable)
 
 	# Need to instantiate the objects after putting the class in the container
 	player_instance = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -58,14 +58,19 @@ def main():
 			if player_instance.collision(asteroid):
 				print("Game over!")
 				sys.exit()
+
+		for shot in shots:
+			for asteroid in asteroids:
+				if shot.collision(asteroid):
+					shot.kill()
+					asteroid.kill()
+
 		# Render everything on screen constantly
 		for thing in drawable:
 			thing.draw(screen)
 
 		# Constantly update the screen
 		pygame.display.flip()
-		
-
 		
 if __name__ == "__main__":
 	main()
