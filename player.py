@@ -63,5 +63,4 @@ class Player(CircleShape):
 			new_shot = Shot(self.position.x, self.position.y, velocity)
 			# Add new_shot to shots collection or group
 			self.timer = PLAYER_SHOOT_COOLDOWN
-
 	

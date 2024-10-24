@@ -9,6 +9,7 @@ from asteroid import Asteroid
 from asteroidfield import AsteroidField
 import sys
 from shot import Shot
+from score import Score
 
 def main():
 	pygame.init()
@@ -32,6 +33,7 @@ def main():
 	# Need to instantiate the objects after putting the class in the container
 	player_instance = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 	asteroid_field = AsteroidField()
+	player_score = Score()
 
 	while True:
 		# Check if user has closed window
@@ -54,21 +56,27 @@ def main():
 		for thing in updatable:
 			thing.update(dt)
 
-		for asteroid in asteroids:
-			if player_instance.collision(asteroid):
-				print("Game over!")
-				sys.exit()
-
+		# Check if a shot ever comes into contact with an asteroid
 		for shot in shots:
 			for asteroid in asteroids:
 				if shot.collision(asteroid):
 					shot.kill()
-					asteroid.split(asteroids)
+					asteroid.split(asteroids)	
+					player_score.up_score(1)
+		
+		# Check if the player ever comes into contact with an asteroid
+		for asteroid in asteroids:
+			if player_instance.collision(asteroid):
+				print("Game over!")
+				print(f"Congratulations! You scored {player_score.get_score()}")
+				sys.exit()
 
 		# Render everything on screen constantly
 		for thing in drawable:
 			thing.draw(screen)
 
+		# Display the score in the top right of the screen
+		player_score.display(screen,1050,100)
 		# Constantly update the screen
 		pygame.display.flip()
 		
