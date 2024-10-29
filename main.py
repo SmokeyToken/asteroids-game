@@ -10,6 +10,8 @@ from asteroidfield import AsteroidField
 import sys
 from shot import Shot
 from score import Score
+from upgradefield import UpgradeField
+from upgrade import Upgrade
 
 def main():
 	pygame.init()
@@ -24,16 +26,20 @@ def main():
 	drawable = pygame.sprite.Group()
 	asteroids = pygame.sprite.Group()
 	shots = pygame.sprite.Group()
+	upgrades = pygame.sprite.Group()
 
 	Player.containers = (updatable, drawable)
 	Asteroid.containers = (asteroids, updatable, drawable)
 	AsteroidField.containers = (updatable,)
 	Shot.containers = (shots, updatable, drawable)
+	UpgradeField.containers = (updatable,)
+	Upgrade.containers = (upgrades, updatable, drawable)
 
-	# Need to instantiate the objects after putting the class in the container
+	# Need to instantiate the objects AFTER putting the class in the container
 	player_instance = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 	asteroid_field = AsteroidField()
 	player_score = Score()
+	upgrade_field = UpgradeField()
 
 	while True:
 		# Check if user has closed window
@@ -61,8 +67,8 @@ def main():
 			for asteroid in asteroids:
 				if shot.collision(asteroid):
 					shot.kill()
-					asteroid.split(asteroids)	
-					player_score.up_score(1)
+					asteroid.split(asteroids, player_score)	
+					# player_score.up_score(1)
 		
 		# Check if the player ever comes into contact with an asteroid
 		for asteroid in asteroids:
@@ -70,6 +76,13 @@ def main():
 				print("Game over!")
 				print(f"Congratulations! You scored {player_score.get_score()}")
 				sys.exit()
+
+		# Check if the player ever comes into contact with an upgrade
+		for upgrade in upgrades:
+			if player_instance.collision(upgrade):
+				print("Upgrade Collected!")
+				upgrade.kill()
+				# print("Upgrade Deleted") # debug code
 
 		# Render everything on screen constantly
 		for thing in drawable:

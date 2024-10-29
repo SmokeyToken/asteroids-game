@@ -1,0 +1,3 @@
+add shot speed upgrade
+add player speed upgrade
+add point multiplier
