@@ -81,6 +81,7 @@ def main():
 		for upgrade in upgrades:
 			if player_instance.collision(upgrade):
 				print("Upgrade Collected!")
+				upgrade.check_upgrade()
 				upgrade.kill()
 				# print("Upgrade Deleted") # debug code
 

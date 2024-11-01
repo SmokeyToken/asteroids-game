@@ -1,4 +1,5 @@
 import pygame
+import random
 from circleshape import CircleShape
 from player import Player
 from asteroid import Asteroid
@@ -15,9 +16,18 @@ class Upgrade(CircleShape):
 
     def draw(self, screen):
         pygame.draw.circle(screen, (255,255,255), self.position, self.radius, 2)
-
+        
     def update(self, dt):
         self.position += self.velocity * dt
 
-    def shooter_upgrade(self):
-        self.kill
+    def check_upgrade(self):
+        pass
+    
+    def shot_upgrade(self):
+        pass
+
+    def speed_upgrade(self):
+        pass
+
+    def multiplier_upgrade(self):
+        pass

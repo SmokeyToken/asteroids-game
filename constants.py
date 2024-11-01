@@ -15,5 +15,10 @@ PLAYER_SHOOT_COOLDOWN = 0.3
 SHOT_RADIUS = 5
 
 UPGRADE_SPAWN_RATE = 10.0 # seconds
-UPGRADE_TYPES = 1
+UPGRADE_TYPES = 3
 UPGRADE_RADIUS = 10
+UPGRADE_CHOICES = {
+    "speed" : (50,163,211),
+    "shot": (218,163,211),
+    "multiplier": (246,255,48) 
+    }

@@ -1,3 +1,6 @@
 add shot speed upgrade
 add player speed upgrade
 add point multiplier
+
+upgrade method to check which kind of upgrade it is
+upgrade method for each different type of upgrade
